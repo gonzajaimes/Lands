@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 namespace Lands
 {
     using System;
