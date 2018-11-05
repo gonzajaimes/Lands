@@ -82,6 +82,7 @@
                         Command="{Binding LoginCommand}"
                         HeightRequest="46" 
                         HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         Text="Login" 
                         TextColor="white">
                     </Button>
