@@ -3,24 +3,30 @@
 namespace Lands.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Lands.Views;
     using System.Windows.Input;
     using Xamarin.Forms;
 
     public class LoginViewModel : BaseViewModel
     {
-             
+
         #region Attributes
         private string _password;
         private bool _isRunning;
         private bool _isEnabled;
+        private string _email;
         #endregion
 
         #region Properties
-        public string Email { get; set; }
+        public string Email
+        {
+            get { return _email; }
+            set{ SetValue(ref _email,value);}
+        }
         public string Password
         {
-            get{ return _password;}
-            set{ SetValue(ref _password, value);}
+            get { return _password; }
+            set { SetValue(ref _password, value); }
         }
         public bool IsRemembered
         {
@@ -46,8 +52,14 @@ namespace Lands.ViewModels
         {
             this.IsRemembered = true;
             this.IsEnabled = true;
+
+            this.Email = "gonzajaimes@hotmail.com";
+            this.Password = "1234";
+
+            //http://restcountries.eu/rest/v2/all
         }
         #endregion
+
         #region Commands
         public ICommand LoginCommand
         {
@@ -58,7 +70,7 @@ namespace Lands.ViewModels
 
         }
 
-        
+
         private async void Login()
         {
             if (string.IsNullOrEmpty(this.Email))
@@ -95,15 +107,15 @@ namespace Lands.ViewModels
             }
             this.IsRunning = false;
             this.IsEnabled = true;
-            await Application.Current.MainPage.DisplayAlert(
-                    "Ok",
-                    "Fuck Yeah!",
-                    "Accept");
-            return;
+
+            this.Email = string.Empty;
+            this.Password = string.Empty;
+
+            MainViewModel.GetInstance().Lands = new LandsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
         }
         #endregion
-        #region Methods
-       
-        #endregion
+
+      
     }
 }
