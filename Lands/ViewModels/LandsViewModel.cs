@@ -22,18 +22,14 @@ namespace Lands.ViewModels
 
         #region Properties
         public ObservableCollection<Land> Lands
-        #endregion
-        {
-            get
-            {
-                return _lands;
-            }
 
-            set
-            {
-                SetValue(ref _lands, value); 
-            }
+        {
+            get{ return _lands; }
+
+            set{ SetValue(ref _lands, value); }
         }
+
+        #endregion
 
         #region Constructors
         public LandsViewModel()
@@ -48,6 +44,18 @@ namespace Lands.ViewModels
         #region Methods
         private async void LoadLands()
         {
+            var connection = await this.apiservice.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                     "Error",
+                     connection.Message,
+                     "Accept");
+                await Application.Current.MainPage.Navigation.PopAsync();
+                return;
+            }
+
             var response = await this.apiservice.GetList<Land>(
                            "http://restcountries.eu",
                            "/rest",
@@ -58,6 +66,7 @@ namespace Lands.ViewModels
                      "Error",
                      response.Message,
                      "Accept");
+                await Application.Current.MainPage.Navigation.PopAsync();
                 return;
             }
 
