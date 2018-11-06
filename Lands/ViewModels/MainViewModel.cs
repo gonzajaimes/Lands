@@ -9,7 +9,14 @@ namespace Lands.ViewModels
             get;
             set;
         }
+
         public LandsViewModel Lands
+        {
+            get;
+            set;
+        }
+
+        public LandViewModel Land
         {
             get;
             set;

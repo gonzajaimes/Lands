@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\LoginPage.cs" />
+    <Compile Remove="Views\Land.xaml.cs" />
   </ItemGroup>
 </Project>
