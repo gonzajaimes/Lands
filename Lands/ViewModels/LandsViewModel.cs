@@ -7,8 +7,10 @@ namespace Lands.ViewModels
     using Models;
     using Xamarin.Forms;
     using System.Collections.Generic;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
 
-    public class LandsViewModel :BaseViewModel
+    public class LandsViewModel : BaseViewModel
     {
 
         #region Services
@@ -18,15 +20,24 @@ namespace Lands.ViewModels
 
         #region Attributes
         private ObservableCollection<Land> _lands;
+        private bool _isRefreshing;
         #endregion
 
         #region Properties
+
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+
+            set { SetValue(ref _isRefreshing, value); }
+        }
+
         public ObservableCollection<Land> Lands
 
         {
-            get{ return _lands; }
+            get { return _lands; }
 
-            set{ SetValue(ref _lands, value); }
+            set { SetValue(ref _lands, value); }
         }
 
         #endregion
@@ -44,10 +55,13 @@ namespace Lands.ViewModels
         #region Methods
         private async void LoadLands()
         {
+            this.IsRefreshing = true;
             var connection = await this.apiservice.CheckConnection();
+
 
             if (!connection.IsSuccess)
             {
+                this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
                      "Error",
                      connection.Message,
@@ -62,6 +76,7 @@ namespace Lands.ViewModels
                            "/v2/all");
             if (!response.IsSuccess)
             {
+                this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
                      "Error",
                      response.Message,
@@ -72,7 +87,20 @@ namespace Lands.ViewModels
 
             var list = (List<Land>)response.Result;
             this.Lands = new ObservableCollection<Land>(list);
+            this.IsRefreshing = false;
         }
+        #endregion
+
+        #region Commands
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(LoadLands);
+            }
+
+        }
+
         #endregion
 
     }

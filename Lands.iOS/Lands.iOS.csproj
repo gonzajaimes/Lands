@@ -163,5 +163,6 @@
     <BundleResource Include="Resources\twitter_logo.png" />
     <BundleResource Include="Resources\instagram_logo.png" />
     <BundleResource Include="Resources\facebook_logo.png" />
+    <BundleResource Include="Resources\ic_chevron_right.png" />
   </ItemGroup>
 </Project>
