@@ -9,6 +9,7 @@ namespace Lands.ViewModels
     using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using System.Linq;
 
     public class LandsViewModel : BaseViewModel
     {
@@ -21,22 +22,32 @@ namespace Lands.ViewModels
         #region Attributes
         private ObservableCollection<Land> _lands;
         private bool _isRefreshing;
+        private string _filter;
+        private List<Land> landsList;
         #endregion
 
         #region Properties
 
+        public string Filter
+        {
+            get { return _filter; }
+            set 
+            { 
+                SetValue(ref _filter, value);
+                this.Search();
+            }
+            
+        }
+
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
-
             set { SetValue(ref _isRefreshing, value); }
         }
 
         public ObservableCollection<Land> Lands
-
         {
             get { return _lands; }
-
             set { SetValue(ref _lands, value); }
         }
 
@@ -85,9 +96,24 @@ namespace Lands.ViewModels
                 return;
             }
 
-            var list = (List<Land>)response.Result;
-            this.Lands = new ObservableCollection<Land>(list);
+            this.landsList = (List<Land>)response.Result;
+            this.Lands = new ObservableCollection<Land>(this.landsList);
             this.IsRefreshing = false;
+        }
+
+        private void Search()
+        {
+           if (string.IsNullOrEmpty(this.Filter))
+            {
+                this.Lands = new ObservableCollection<Land>(this.landsList);
+            }
+            else
+            {
+                this.Lands = new ObservableCollection<Land>(
+                    this.landsList.Where(
+                        l => l.Name.ToLower().Contains(this.Filter.ToLower()) || 
+                             l.Capital.ToLower().Contains(this.Filter.ToLower())));
+            }
         }
         #endregion
 
@@ -100,6 +126,17 @@ namespace Lands.ViewModels
             }
 
         }
+
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return new RelayCommand(Search);
+            }
+
+        }
+
+
 
         #endregion
 
