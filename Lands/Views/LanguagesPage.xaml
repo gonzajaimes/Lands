@@ -7,6 +7,51 @@
     Icon="ic_action_people"
     Title="Languages">
     <ContentPage.Content>
-        <Label Text="Languages"/>
+        <StackLayout
+            Padding="5"
+            BindingContext="{Binding Land}">
+            <Label 
+                FontSize="Large" 
+                FontAttributes="Bold" 
+                HorizontalOptions="Center" 
+                Text="{Binding Land.Name}" 
+                TextColor="Black">
+            </Label>
+            <ListView
+                HasUnevenRows="true"
+                ItemsSource="{Binding Languages}">
+               <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    
+                                </Grid.ColumnDefinitions>
+                                
+                                    <Label 
+                                        Grid.Column="0"
+                                        Text="{Binding Iso6391}"
+                                        TextColor="Black">
+                                    </Label>
+                                    <Label 
+                                        Grid.Column="1"
+                                        Text="{Binding Name}"
+                                        TextColor="Black">
+                                    </Label>
+                                    <Label 
+                                        Grid.Column="2"
+                                        Text="{Binding NativeName}"
+                                        TextColor="Black">
+                                    </Label>
+                             </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>   
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

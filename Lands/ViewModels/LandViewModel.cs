@@ -10,6 +10,8 @@ namespace Lands.ViewModels
         #region Attributes
         private ObservableCollection<Border> _borders;
         private ObservableCollection<Currency> _currencies;
+        private Translations _translations;
+        private ObservableCollection<Language> _languages;
         #endregion
 
         #region Properties
@@ -32,7 +34,17 @@ namespace Lands.ViewModels
             set;
         }
 
+        public ObservableCollection<Language> Languages
+        {
+            get { return _languages; }
+            set { this.SetValue(ref _languages, value); }
+        }
 
+        public Translations Translations
+        {
+            get { return _translations; }
+            set { this.SetValue(ref _translations, value); }
+        }
         #endregion
 
 
@@ -42,6 +54,7 @@ namespace Lands.ViewModels
             this.Land = land;
             this.LoadBorders();
             this.Currencies = new ObservableCollection<Currency>(this.Land.Currencies);
+            this.Languages = new ObservableCollection<Language>(this.Land.Languages);
         }
 
 
