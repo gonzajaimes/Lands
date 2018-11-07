@@ -9,13 +9,21 @@ namespace Lands.ViewModels
     {
         #region Attributes
         private ObservableCollection<Border> _borders;
+        private ObservableCollection<Currency> _currencies;
         #endregion
 
         #region Properties
+
         public ObservableCollection<Border> Borders
         {
             get { return _borders; }
             set { this.SetValue(ref _borders, value); }
+        }
+
+        public ObservableCollection<Currency> Currencies
+        {
+            get { return _currencies; }
+            set { this.SetValue(ref _currencies, value); }
         }
 
         public Land Land
@@ -23,6 +31,8 @@ namespace Lands.ViewModels
             get;
             set;
         }
+
+
         #endregion
 
 
@@ -31,6 +41,7 @@ namespace Lands.ViewModels
         {
             this.Land = land;
             this.LoadBorders();
+            this.Currencies = new ObservableCollection<Currency>(this.Land.Currencies);
         }
 
 
@@ -40,12 +51,12 @@ namespace Lands.ViewModels
         private void LoadBorders()
         {
             this.Borders = new ObservableCollection<Border>();
-            foreach(var border in this.Land.Borders)
+            foreach (var border in this.Land.Borders)
             {
                 var land = MainViewModel.GetInstance().LandsList
                            .FirstOrDefault(l => l.Alpha3Code == border);
-                                       
-                  if (land != null)
+
+                if (land != null)
                 {
                     this.Borders.Add(new Border
                     {
