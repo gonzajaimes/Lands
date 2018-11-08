@@ -58,7 +58,9 @@ namespace Lands.ViewModels
             this.apiservice = new ApiService();
             this.IsRemembered = true;
             this.IsEnabled = true;
-
+            //usuario provisional para no andar digitando en desarrollo
+            this.Email = "gonzajaimes@hotmail.com"
+            this.Password = "1234567"
 
         }
         #endregion

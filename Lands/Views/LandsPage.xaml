@@ -10,6 +10,7 @@
             BindingContext="{Binding Lands}"
             Padding="5">
             <SearchBar
+                HeightRequest="46"
                 Text="{Binding Filter, Mode=TwoWay}"
                 Placeholder="Search..."
                 SearchCommand="{Binding SearchCommand}">
