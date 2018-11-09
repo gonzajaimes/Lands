@@ -59,8 +59,8 @@ namespace Lands.ViewModels
             this.IsRemembered = true;
             this.IsEnabled = true;
             //usuario provisional para no andar digitando en desarrollo
-            this.Email = "gonzajaimes@hotmail.com"
-            this.Password = "1234567"
+            this.Email = "gonzajaimes@hotmail.com";
+            this.Password = "1234567";
 
         }
         #endregion
