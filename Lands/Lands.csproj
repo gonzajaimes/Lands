@@ -33,4 +33,7 @@
     <Compile Remove="Views\Land.xaml.cs" />
     <Compile Remove="Views\CurrenciesPage.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lands.Domain\Lands.Domain.csproj" />
+  </ItemGroup>
 </Project>
