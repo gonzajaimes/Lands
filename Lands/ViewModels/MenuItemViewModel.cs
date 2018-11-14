@@ -3,7 +3,7 @@
 namespace Lands.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
-    using System;
+    using Helpers;
     using System.Windows.Input;
     using Views;
     using Xamarin.Forms;
@@ -29,6 +29,17 @@ namespace Lands.ViewModels
         {
            if (this.PageName == "LoginPage")
             {
+                //Forget Settings when LogOut
+
+                Settings.Token = string.Empty;
+                Settings.TokenType = string.Empty;
+
+                //Forget Token From MainViewModel
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.Token = string.Empty;
+                mainViewModel.TokenType = string.Empty;
+
+
                 Application.Current.MainPage = new LoginPage();
             }
         }
