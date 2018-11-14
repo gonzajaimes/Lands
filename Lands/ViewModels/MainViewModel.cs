@@ -101,7 +101,7 @@ namespace Lands.ViewModels
             {
                 Icon = "ic_exit_to_app",
                 PageName = "LoginPage",
-                Title = Languages.MyProfile,
+                Title = Languages.LogOut,
             });
         } 
         #endregion

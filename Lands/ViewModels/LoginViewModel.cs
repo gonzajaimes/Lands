@@ -143,8 +143,13 @@ namespace Lands.ViewModels
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = token.AccessToken;
             mainViewModel.TokenType = token.TokenType;
-            Settings.Token = token.AccessToken;
-            Settings.TokenType = token.TokenType;
+
+            if (this.IsRemembered)
+            {
+                Settings.Token = token.AccessToken;
+                Settings.TokenType = token.TokenType;
+            }
+            
             mainViewModel.Lands = new LandsViewModel();
 
             Application.Current.MainPage = new MasterPage();
