@@ -186,7 +186,14 @@
     <BundleResource Include="Resources\ic_action_people.png" />
     <BundleResource Include="Resources\ic_action_translate.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Implementations\" />
+    <BundleResource Include="Resources\ic_exit_to_app.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_insert_chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_settings.png" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
     using Xamarin.Forms;
     using Interfaces;
     using Resources;
-
+    
     public static class Languages
     {
         static Languages()
@@ -171,6 +171,26 @@
         public static string MyLanguages
         {
             get { return Resource.MyLanguages; }
+        }
+
+        public static string Menu
+        {
+            get { return Resource.Menu; }
+        }
+
+        public static string MyProfile
+        {
+            get { return Resource.MyProfile; }
+        }
+
+        public static string Stats
+        {
+            get { return Resource.Stats; }
+        }
+
+        public static string LogOut
+        {
+            get { return Resource.LogOut; }
         }
     }
 }

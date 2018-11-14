@@ -8,6 +8,14 @@ namespace Lands
 
     public partial class App : Application
     {
+        #region Properties
+        public static object Navigator
+        {
+            get;
+            internal set;
+        } 
+        #endregion
+
         #region Constructors
         public App()
         {

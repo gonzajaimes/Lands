@@ -1,8 +1,11 @@
 ﻿
 namespace Lands.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using Models;
+    using Helpers;
 
     public class MainViewModel
     {
@@ -18,6 +21,13 @@ namespace Lands.ViewModels
             get;
             set;
         }
+
+        public ObservableCollection<MenuItemViewModel> MenuItems
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region ViewModels
@@ -45,7 +55,10 @@ namespace Lands.ViewModels
         {
             instance = this;
             this.Login = new LoginViewModel();
+            this.LoadMenu();
         }
+
+       
         #endregion
 
         #region Singleton
@@ -61,5 +74,30 @@ namespace Lands.ViewModels
             return instance;    
         }
         #endregion
-    }
+
+        #region Methods
+        private void LoadMenu()
+        {
+            this.MenuItems = new ObservableCollection<MenuItemViewModel>();
+            this.MenuItems.Add(new MenuItemViewModel
+            {
+                Icon = "ic_settings",
+                PageName = "MyProfilePage",
+                Title = Languages.MyProfile ,
+            });
+            this.MenuItems.Add(new MenuItemViewModel
+            {
+                Icon = "ic_insert_chart",
+                PageName = "StatsPage",
+                Title = Languages.Stats,
+            });
+            this.MenuItems.Add(new MenuItemViewModel
+            {
+                Icon = "ic_exit_to_app",
+                PageName = "LoginPage",
+                Title = Languages.MyProfile,
+            });
+        } 
+        #endregion
+    }   
 }
