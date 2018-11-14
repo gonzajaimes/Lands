@@ -11,7 +11,7 @@ namespace Lands
     public partial class App : Application
     {
         #region Properties
-        public static object Navigator
+        public static NavigationPage Navigator
         {
             get;
             internal set;
