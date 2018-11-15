@@ -40,7 +40,7 @@ namespace Lands.ViewModels
                 mainViewModel.TokenType = string.Empty;
 
 
-                Application.Current.MainPage = new LoginPage();
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
         }
         #endregion
