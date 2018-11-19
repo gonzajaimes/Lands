@@ -8,6 +8,7 @@ namespace Lands.ViewModels
     using System.Windows.Input;
     using Xamarin.Forms;
     using Helpers;
+    using System;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -163,8 +164,22 @@ namespace Lands.ViewModels
 
 
         }
+
+        public ICommand RegisterCommand
+        {
+            get
+            {
+                return new RelayCommand(Register);
+            }
+
+        }
+
+        private void Register()
+        {
+
+        }
         #endregion
 
-      
+
     }
 }
