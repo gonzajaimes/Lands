@@ -295,11 +295,38 @@ namespace Lands.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Log Out.
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Menu.
+        /// </summary>
+        public static string Menu {
+            get {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Languages.
         /// </summary>
         public static string MyLanguages {
             get {
                 return ResourceManager.GetString("MyLanguages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a My Profile.
+        /// </summary>
+        public static string MyProfile {
+            get {
+                return ResourceManager.GetString("MyProfile", resourceCulture);
             }
         }
         
@@ -430,6 +457,15 @@ namespace Lands.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Stats.
+        /// </summary>
+        public static string Stats {
+            get {
+                return ResourceManager.GetString("Stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Subregion:.
         /// </summary>
         public static string Subregion {
@@ -446,49 +482,5 @@ namespace Lands.Resources {
                 return ResourceManager.GetString("Translations", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Busca una cadena traducida similar a Menu.
-        /// </summary>
-        public static string Menu   
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Busca una cadena traducida similar a MyProfile.
-        /// </summary>
-        public static string MyProfile  
-        {
-            get
-            {
-                return ResourceManager.GetString("MyProfile", resourceCulture);
-            }
-        }
-        /// <summary>
-        ///   Busca una cadena traducida similar a Stats.
-        /// </summary>
-        public static string Stats
-        {
-            get
-            {
-                return ResourceManager.GetString("Stats", resourceCulture);
-            }
-        }
-
-             /// <summary>
-             ///   Busca una cadena traducida similar a Logout.
-             /// </summary>
-        public static string LogOut
-        {
-            get
-            {
-                return ResourceManager.GetString("LogOut", resourceCulture);
-            }
-        }
     }
 }
-
