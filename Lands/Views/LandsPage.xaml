@@ -8,12 +8,12 @@
     xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
     BindingContext="{Binding Main, Source={StaticResource Locator}}"
     Title="Lands">
-    <ContentPage.Resources>
+    <!--<ContentPage.Resources>
         <ResourceDictionary>
             <ffimageloadingsvg:SvgImageSourceConverter x:Key="SvgImageSourceConverter">
             </ffimageloadingsvg:SvgImageSourceConverter>
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
 
     <ContentPage.Content>
         <StackLayout
@@ -49,12 +49,12 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <ffimageloading:CachedImage
+                                    <ffimageloadingsvg:SvgCachedImage
                                         Grid.Column="0"
                                         HeightRequest="30"                                        
-                                        Source="{Binding Flag, Converter={StaticResource SvgImageSourceConverter}}"
+                                        Source="{Binding Flag}"
                                         WidthRequest="60">
-                                    </ffimageloading:CachedImage>
+                                    </ffimageloadingsvg:SvgCachedImage>
                                     <StackLayout 
                                         Grid.Column="1"
                                         VerticalOptions="Center">

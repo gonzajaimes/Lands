@@ -2,7 +2,8 @@
 
 namespace Lands.iOS
 {
-    using FFImageLoading.Forms.Touch;
+    using FFImageLoading.Forms.Platform;
+    using FFImageLoading.Svg.Forms;
     using Foundation;
     using UIKit;
 
@@ -23,6 +24,7 @@ namespace Lands.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

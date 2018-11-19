@@ -6,9 +6,7 @@ namespace Lands.Droid
     using Android.App;
     using Android.Content.PM;
     using Android.OS;
-    using FFImageLoading.Forms.Droid;
-
-    // using FFImageLoading.Forms.Platform;
+    using FFImageLoading.Forms.Platform;
 
     [Activity(Label = "Lands", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
