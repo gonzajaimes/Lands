@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Lands.Backend.Models;
-using Lands.Domain;
+﻿
 
 namespace Lands.Backend.Controllers
 {
+    using System.Data.Entity;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Web.Mvc;
+    using Lands.Backend.Models;
+    using Lands.Domain;
+
+    [Authorize(Roles = "Admin")]
     public class UserTypesController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
