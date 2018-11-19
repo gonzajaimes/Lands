@@ -6,9 +6,14 @@
 
 <h2>Index</h2>
 
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserType.Name)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -24,14 +29,14 @@
         <th>
             @Html.DisplayNameFor(model => model.ImagePath)
         </th>
-        <th>
-            User Type
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserType.Name)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
@@ -48,10 +53,9 @@
             @Html.DisplayFor(modelItem => item.ImagePath)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserType.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.UserId }) 
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
         </td>
     </tr>
 }
