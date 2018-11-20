@@ -3,13 +3,16 @@
 namespace Lands.Domain
 {
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
 
     public class DataContext : DbContext
     {
-        protected DataContext() : base("DefaultConnection")
+        public DataContext() : base("DefaultConnection")
         {
-
+           
         }
+
+        public System.Data.Entity.DbSet<Lands.Domain.User> Users { get; set; }
+
+        public System.Data.Entity.DbSet<Lands.Domain.UserType> UserTypes { get; set; }
     }
 }
