@@ -194,9 +194,8 @@
     <BundleResource Include="Resources\ic_action_monetization_on.png" />
     <BundleResource Include="Resources\ic_action_people.png" />
     <BundleResource Include="Resources\ic_action_translate.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\ic_menu.png" />
+    <BundleResource Include="Resources\no_image.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_exit_to_app.png" />
