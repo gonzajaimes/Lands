@@ -204,7 +204,7 @@
                 imageArray = FilesHelper.ReadFully(this.file.GetStream());
             }
 
-            var user = new User
+            var user = new UserView
             {
                 Email = this.Email,
                 FirstName = this.FirstName,

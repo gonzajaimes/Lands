@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Lands.Domain;
+﻿
 
 namespace Lands.API.Controllers
 {
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.Description;
+    using Helpers;
+    using Domain;
+    using System.IO;
+    using System;
+
     public class UsersController : ApiController
     {
         private DataContext db = new DataContext();
@@ -73,17 +74,43 @@ namespace Lands.API.Controllers
 
         // POST: api/Users
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> PostUser(User user)
+        public async Task<IHttpActionResult> PostUser(UserView view)
         {
-            if (!ModelState.IsValid)
+            if (view.ImageArray != null && view.ImageArray.Length > 0)
             {
-                return BadRequest(ModelState);
+                var stream = new MemoryStream(view.ImageArray);
+                var guid = Guid.NewGuid().ToString();
+                var file = string.Format("{0}.jpg", guid);
+                var folder = "~/Content/Images";
+                var fullPath = string.Format("{0}/{1}", folder, file);
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
+
+                if (response)
+                {
+                    view.ImagePath = fullPath;
+                }
             }
 
+            var user = this.ToUser(view);
             db.Users.Add(user);
             await db.SaveChangesAsync();
+            UsersHelper.CreateUserASP(view.Email, "User", view.Password);
+            return CreatedAtRoute("DefaultApi", new { id = view.UserId }, view);
+        }
 
-            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
+        private User ToUser(UserView view)
+        {
+            return new User
+            {
+                Email = view.Email,
+                FirstName = view.FirstName,
+                ImagePath = view.ImagePath,
+                LastName = view.LastName,
+                Telephone = view.Telephone,
+                UserId = view.UserId,
+                UserType = view.UserType,
+                UserTypeId = view.UserTypeId,
+            };
         }
 
         // DELETE: api/Users/5
