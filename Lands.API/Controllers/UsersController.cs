@@ -74,11 +74,11 @@ namespace Lands.API.Controllers
 
         // POST: api/Users
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> PostUser(UserView view)
+        public async Task<IHttpActionResult> PostUser(User user)
         {
-            if (view.ImageArray != null && view.ImageArray.Length > 0)
+            if (user.ImageArray != null && user.ImageArray.Length > 0)
             {
-                var stream = new MemoryStream(view.ImageArray);
+                var stream = new MemoryStream(user.ImageArray);
                 var guid = Guid.NewGuid().ToString();
                 var file = string.Format("{0}.jpg", guid);
                 var folder = "~/Content/Images";
@@ -87,31 +87,18 @@ namespace Lands.API.Controllers
 
                 if (response)
                 {
-                    view.ImagePath = fullPath;
+                    user.ImagePath = fullPath;
                 }
             }
 
-            var user = this.ToUser(view);
+            
             db.Users.Add(user);
             await db.SaveChangesAsync();
-            UsersHelper.CreateUserASP(view.Email, "User", view.Password);
-            return CreatedAtRoute("DefaultApi", new { id = view.UserId }, view);
+            UsersHelper.CreateUserASP(user.Email, "User", user.Password);
+            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
         }
 
-        private User ToUser(UserView view)
-        {
-            return new User
-            {
-                Email = view.Email,
-                FirstName = view.FirstName,
-                ImagePath = view.ImagePath,
-                LastName = view.LastName,
-                Telephone = view.Telephone,
-                UserId = view.UserId,
-                UserType = view.UserType,
-                UserTypeId = view.UserTypeId,
-            };
-        }
+        
 
         // DELETE: api/Users/5
         [ResponseType(typeof(User))]

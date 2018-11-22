@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using static System.Net.Mime.MediaTypeNames;
 
     public class User
     {
@@ -34,6 +35,12 @@
         [JsonIgnore]
         public virtual UserType UserType { get; set; }
 
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
+
+        [NotMapped]
+        public string Password { get; set; }
+
         [Display(Name = "Image")]
         public string ImagePath { get; set; }
 
@@ -47,8 +54,9 @@
                     return "noimage";
                 }
 
+                
                 return string.Format(
-                    "http://landsapi1.azurewebsites.net/{0}",
+                    "http://landsapi1977.azurewebsites.net/{0}",
                     ImagePath.Substring(1));
             }
         }

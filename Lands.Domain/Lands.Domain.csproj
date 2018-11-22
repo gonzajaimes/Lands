@@ -56,7 +56,6 @@
     <Compile Include="Response.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserType.cs" />
-    <Compile Include="UserView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
