@@ -61,7 +61,7 @@ namespace Lands.ViewModels
             this.IsRemembered = true;
             this.IsEnabled = true;
             //usuario provisional para no andar digitando en desarrollo
-            this.Email = "oreostudios@hotmail.com";
+            //this.Email = "oreostudios@hotmail.com";
             //this.Password = "1234567";
 
         }
@@ -151,6 +151,7 @@ namespace Lands.ViewModels
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = token.AccessToken;
             mainViewModel.TokenType = token.TokenType;
+            mainViewModel.User = user;
 
             if (this.IsRemembered)
             {
