@@ -14,6 +14,7 @@ namespace Lands.ViewModels
     {
         #region Services
         private ApiService apiservice;
+        private DataService dataservice;
 
         #endregion
 
@@ -58,6 +59,7 @@ namespace Lands.ViewModels
         public LoginViewModel()
         {
             this.apiservice = new ApiService();
+            this.dataservice = new DataService();
             this.IsRemembered = true;
             this.IsEnabled = true;
             //usuario provisional para no andar digitando en desarrollo
@@ -148,15 +150,19 @@ namespace Lands.ViewModels
                                "/Users/GetUserByEmail",
                                this.Email);
 
+            var userLocal = Converter.ToUserLocal(user);
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = token.AccessToken;
             mainViewModel.TokenType = token.TokenType;
-            mainViewModel.User = user;
+            mainViewModel.User = userLocal;
 
             if (this.IsRemembered)
             {
                 Settings.Token = token.AccessToken;
                 Settings.TokenType = token.TokenType;
+
+                //guardamos el usuario en persistencia al hacer Login.
+                this.dataservice.DeleteAllAndInsert(userLocal);
             }
             
             mainViewModel.Lands = new LandsViewModel();
