@@ -142,6 +142,12 @@ namespace Lands.ViewModels
                 return;
             }
 
+            var user = await this.apiservice.GetUserByEmail(
+                               apiSecurity,
+                               "/api",
+                               "/Users/GetUserByEmail",
+                               this.Email);
+
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = token.AccessToken;
             mainViewModel.TokenType = token.TokenType;
