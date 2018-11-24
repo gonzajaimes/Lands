@@ -15,7 +15,6 @@
                     Aspect="AspectFill"
                     HeightRequest="150"
                     Source="{Binding User.ImageFullPath}">
-                    
             </controls:CircleImage>
             <Label 
                FontSize="Large"
