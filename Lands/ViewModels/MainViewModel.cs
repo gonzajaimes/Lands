@@ -8,8 +8,14 @@ namespace Lands.ViewModels
     using Helpers;
     using Domain;
 
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
+        #region Attributes
+
+        private UserLocal _user;
+
+        #endregion
+
         #region Properties
         public List<Land> LandsList
         {
@@ -37,8 +43,8 @@ namespace Lands.ViewModels
 
         public UserLocal User
         {
-            get;
-            set;
+            get { return _user; }
+            set { SetValue(ref _user, value); }
         }
 
         #endregion
@@ -83,12 +89,12 @@ namespace Lands.ViewModels
             this.LoadMenu();
         }
 
-       
+
         #endregion
 
         #region Singleton
         private static MainViewModel instance;
-
+       
         public static MainViewModel GetInstance()
         {
             if (instance == null)
@@ -96,7 +102,7 @@ namespace Lands.ViewModels
                 return new MainViewModel();
             }
 
-            return instance;    
+            return instance;
         }
         #endregion
 
@@ -108,7 +114,7 @@ namespace Lands.ViewModels
             {
                 Icon = "ic_settings",
                 PageName = "MyProfilePage",
-                Title = Languages.MyProfile ,
+                Title = Languages.MyProfile,
             });
             this.MenuItems.Add(new MenuItemViewModel
             {
@@ -122,7 +128,7 @@ namespace Lands.ViewModels
                 PageName = "LoginPage",
                 Title = Languages.LogOut,
             });
-        } 
+        }
         #endregion
-    }   
+    }
 }

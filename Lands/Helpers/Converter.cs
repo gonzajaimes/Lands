@@ -36,7 +36,7 @@ namespace Lands.Helpers
                 UserId = user.UserId,
                 UserTypeId = user.UserTypeId.Value,
                 ImageArray = imageArray,
-            }
+            };
         }
     }
 }
