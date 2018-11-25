@@ -13,6 +13,7 @@
     {
         #region Services
         private ApiService apiService;
+        private DataService dataService;
         #endregion
 
         #region Attributes
@@ -52,6 +53,7 @@
         public MyProfileViewModel()
         {
             this.apiService = new ApiService();
+            this.dataService = new DataService();
             this.User = MainViewModel.GetInstance().User;
             this.ImageSource = this.User.ImageFullPath;
             this.IsEnabled = true;
@@ -172,6 +174,11 @@
                     Languages.Accept);
                 return;
             }
+
+            var userLocal = Converter.ToUserLocal(userApi);
+
+            MainViewModel.GetInstance().User = userLocal;
+            this.dataService.Update(userLocal);
 
             this.IsRunning = true;
             this.IsEnabled = false;
