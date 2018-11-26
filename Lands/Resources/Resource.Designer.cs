@@ -340,6 +340,15 @@ namespace Lands.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The password couldn`t be changed, please try later.
+        /// </summary>
+        public static string ErrorChangingPassword {
+            get {
+                return ResourceManager.GetString("ErrorChangingPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a First Name.
         /// </summary>
         public static string FirstNameLabel {
