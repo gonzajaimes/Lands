@@ -17,6 +17,8 @@ namespace Lands.Models
 
         public string Telephone { get; set; }
 
+        public string Password { get; set; }
+
         public string ImagePath { get; set; }
 
         public int? UserTypeId { get; set; }

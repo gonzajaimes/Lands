@@ -21,37 +21,23 @@ namespace Lands.Helpers
 
         #region Setting Constants
 
-        private const string token = "Token";
-        private const string tokenType = "TokenType";
-        private static readonly string stringDefault  = string.Empty;
+        private const string isRemembered = "IsRemembered";
+        private static readonly string stringDefault = string.Empty;
 
         #endregion
 
-            
-        public static string Token
+
+        public static string IsRemembered
         {
             get
             {
-                return AppSettings.GetValueOrDefault(token, stringDefault);
+                return AppSettings.GetValueOrDefault(isRemembered, stringDefault);
             }
             set
             {
-                AppSettings.AddOrUpdateValue(token, value);
+                AppSettings.AddOrUpdateValue(isRemembered, value);
             }
         }
-
-        public static string TokenType
-        {
-            get
-            {
-                return AppSettings.GetValueOrDefault(tokenType, stringDefault);
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue(tokenType, value);
-            }
-        }
-
 
     }
 }

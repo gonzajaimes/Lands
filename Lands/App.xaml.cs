@@ -30,20 +30,29 @@ namespace Lands
         {
             InitializeComponent();
 
-            if(string.IsNullOrEmpty(Settings.Token))
+            if(Settings.IsRemembered == "true")
             {
-                MainPage = new NavigationPage(new LoginPage());
+                var dataservice = new DataService();
+                var token = dataservice.First<TokenResponse>(false);
+                if (token != null && token.Expires > DateTime.Now)
+                {
+                    var user = dataservice.First<UserLocal>(false);
+                    var mainViewModel = MainViewModel.GetInstance();
+                    mainViewModel.Token = token;
+                    mainViewModel.User = user;
+                    mainViewModel.Lands = new LandsViewModel();
+                    MainPage = new MasterPage();
+                }
+                else
+                {
+                    MainPage = new NavigationPage(new LoginPage());
+                }
+
             }
             else
             {
-                var dataservice = new DataService();
-                var user = dataservice.First<UserLocal>(false);
-                var mainViewModel = MainViewModel.GetInstance();
-                mainViewModel.Token = Settings.Token;
-                mainViewModel.TokenType = Settings.TokenType;
-                mainViewModel.User = user;
-                mainViewModel.Lands = new LandsViewModel();
-                MainPage = new MasterPage();
+                MainPage = new NavigationPage(new LoginPage());
+
             }
 
             

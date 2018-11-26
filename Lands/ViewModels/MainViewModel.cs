@@ -23,13 +23,7 @@ namespace Lands.ViewModels
             set;
         }
 
-        public string Token
-        {
-            get;
-            set;
-        }
-
-        public string TokenType
+        public TokenResponse Token
         {
             get;
             set;
@@ -50,6 +44,13 @@ namespace Lands.ViewModels
         #endregion
 
         #region ViewModels
+
+        public ChangePasswordViewModel ChangePassword
+        {
+            get;
+            set;
+        }
+
         public LoginViewModel Login
         {
             get;

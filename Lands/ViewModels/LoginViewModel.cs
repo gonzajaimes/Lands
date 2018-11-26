@@ -62,10 +62,7 @@ namespace Lands.ViewModels
             this.dataservice = new DataService();
             this.IsRemembered = true;
             this.IsEnabled = true;
-            //usuario provisional para no andar digitando en desarrollo
-            //this.Email = "oreostudios@hotmail.com";
-            //this.Password = "1234567";
-
+          
         }
         #endregion
 
@@ -138,7 +135,7 @@ namespace Lands.ViewModels
                 this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
-                    token.ErrorDescription,
+                    Languages.LoginError,
                     Languages.Accept);
                 this.Password = string.Empty;
                 return;
@@ -153,20 +150,24 @@ namespace Lands.ViewModels
                                this.Email);
 
             var userLocal = Converter.ToUserLocal(user);
+            userLocal.Password = this.Password;
             var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Token = token.AccessToken;
-            mainViewModel.TokenType = token.TokenType;
+            mainViewModel.Token = token;
             mainViewModel.User = userLocal;
 
             if (this.IsRemembered)
             {
-                Settings.Token = token.AccessToken;
-                Settings.TokenType = token.TokenType;
-
-                //guardamos el usuario en persistencia al hacer Login.
-                this.dataservice.DeleteAllAndInsert(userLocal);
+                Settings.IsRemembered = "true";
             }
-            
+            else
+            {
+                Settings.IsRemembered = "false";
+            }
+
+            //guardamos el usuario y token en persistencia al hacer Login.
+            this.dataservice.DeleteAllAndInsert(userLocal);
+            this.dataservice.DeleteAllAndInsert(token);
+
             mainViewModel.Lands = new LandsViewModel();
 
             Application.Current.MainPage = new MasterPage();

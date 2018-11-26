@@ -33,14 +33,12 @@ namespace Lands.ViewModels
             {
                 //Forget Settings when LogOut
 
-                Settings.Token = string.Empty;
-                Settings.TokenType = string.Empty;
+                Settings.IsRemembered = "false";
 
                 //Forget Token From MainViewModel
                 var mainViewModel = MainViewModel.GetInstance();
-                mainViewModel.Token = string.Empty;
-                mainViewModel.TokenType = string.Empty;
-
+                mainViewModel.Token = null;
+                mainViewModel.User = null;
 
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
             }

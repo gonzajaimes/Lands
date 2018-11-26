@@ -10,6 +10,7 @@
     using Newtonsoft.Json;
     using Plugin.Connectivity;
     using Domain;
+    using Helpers;
 
     public class ApiService
     {
@@ -20,7 +21,7 @@
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "Please turn on your internet settings.",
+                    Message = Languages.ConnectionError1,
                 };
             }
 
@@ -31,14 +32,14 @@
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "Check you internet connection.",
+                    Message = Languages.ConnectionError2,
                 };
             }
 
             return new Response
             {
                 IsSuccess = true,
-                Message = "Ok",
+
             };
         }
 
