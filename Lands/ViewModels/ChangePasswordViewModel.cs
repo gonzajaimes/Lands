@@ -3,6 +3,7 @@
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Lands.Helpers;
+    using Lands.Models;
     using Services;
     using Xamarin.Forms;
 
@@ -10,6 +11,7 @@
     {
         #region Services
         private ApiService apiService;
+        private DataService dataService;
         #endregion
 
         #region Attributes
@@ -53,6 +55,7 @@
         public ChangePasswordViewModel()
         {
             this.apiService = new ApiService();
+            this.dataService = new DataService();
             this.IsEnabled = true;
         }
         #endregion
@@ -130,6 +133,61 @@
                     Languages.Accept);
                 return;
             }
+
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
+            var connection = await this.apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
+                return;
+            }
+
+            var request = new ChangePasswordRequest
+            {
+                CurrentPassword = this.CurrentPassword,
+                Email = MainViewModel.GetInstance().User.Email,
+                NewPassword = this.NewPassword,
+            };
+
+            var apiSecurity = Application.Current.Resources["APISecurity"].ToString();
+            var response = await this.apiService.ChangePassword(
+                apiSecurity,
+                "/api",
+                "/Users/ChangePassword",
+                MainViewModel.GetInstance().Token.TokenType,
+                MainViewModel.GetInstance().Token.AccessToken,
+                request);
+
+            if (!response.IsSuccess)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
+                return;
+            }
+
+            MainViewModel.GetInstance().User.Password = this.NewPassword;
+            this.dataService.Update(MainViewModel.GetInstance().User);
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
+
+            await Application.Current.MainPage.DisplayAlert(
+                Languages.ConfirmLabel,
+                Languages.ChagePasswordConfirm,
+                Languages.Accept);
+            await App.Navigator.PopAsync();
         }
         #endregion
     }
