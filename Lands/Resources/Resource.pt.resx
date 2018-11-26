@@ -353,5 +353,8 @@
   </data>
   <data name="ChagePasswordConfirm" xml:space="preserve">
     <value>A senha foi alterada com sucesso.</value>
-  </data>     
+  </data>
+  <data name="PasswordError" xml:space="preserve">
+    <value>A palavra-passe atual está incorreta</value>
+  </data>
 </root>
