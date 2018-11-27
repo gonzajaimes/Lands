@@ -2,13 +2,14 @@
 namespace Lands
 {
     using System;
-    using Lands.Views;
+    using System.Threading.Tasks;
     using Xamarin.Forms;
-    using Xamarin.Forms.Xaml;
+    using Views;
     using Helpers;
-    using Lands.ViewModels;
+    using ViewModels;
     using Services;
     using Models;
+    
 
     public partial class App : Application
     {
@@ -58,8 +59,69 @@ namespace Lands
             
         }
         #endregion
-        
+
         #region Methods
+
+        public static Action HideLoginView
+        {
+            get
+            {
+                return new Action(() => Application.Current.MainPage =
+                                  new NavigationPage(new LoginPage()));
+            }
+        }
+
+        public static async Task NavigateToProfile(FacebookResponse profile)
+        {
+            if (profile == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var apiService = new ApiService();
+            var dataService = new DataService();
+
+            var apiSecurity = Application.Current.Resources["APISecurity"].ToString();
+            var token = await apiService.LoginFacebook(
+                apiSecurity,
+                "/api",
+                "/Users/LoginFacebook",
+                profile);
+
+            if (token == null)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
+
+            var user = await apiService.GetUserByEmail(
+                apiSecurity,
+                "/api",
+                "/Users/GetUserByEmail",
+                token.TokenType,
+                token.AccessToken,
+                token.UserName);
+
+            UserLocal userLocal = null;
+            if (user != null)
+            {
+                userLocal = Converter.ToUserLocal(user);
+                dataService.DeleteAllAndInsert(userLocal);
+                dataService.DeleteAllAndInsert(token);
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = token;
+            mainViewModel.User = userLocal;
+            mainViewModel.Lands = new LandsViewModel();
+            Application.Current.MainPage = new MasterPage();
+            Settings.IsRemembered = "true";
+
+            mainViewModel.Lands = new LandsViewModel();
+            Application.Current.MainPage = new MasterPage();
+        }
+
         protected override void OnStart()
         {
             // Handle when your app starts

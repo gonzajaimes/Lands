@@ -31,10 +31,16 @@ namespace Lands.Models
                 {
                     return "noimage";
                 }
+//si el usuario es Local ...
+                if (this.UserTypeId == 5)
+                {
+                    return string.Format(
+                        "http://landsapi1977.azurewebsites.net/{0}",
+                        ImagePath.Substring(1));
+                }
 
-                return string.Format(
-                    "http://landsapi1977.azurewebsites.net/{0}",
-                    ImagePath.Substring(1));
+                return ImagePath;
+
             }
         }
 
