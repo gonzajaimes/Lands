@@ -71,7 +71,7 @@ namespace Lands.API.Controllers
                         FirstName = profile.FirstName,
                         LastName = profile.LastName,
                         ImagePath = profile.Picture.Data.Url,
-                        UserTypeId = 2,
+                        UserTypeId = 1,
                         Telephone = "...",
                     };
 

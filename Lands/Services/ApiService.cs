@@ -58,10 +58,10 @@
 
 
         public async Task<TokenResponse> LoginFacebook(
-    string urlBase,
-    string servicePrefix,
-    string controller,
-    Models.FacebookResponse profile)
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            Models.FacebookResponse profile)
         {
             try
             {
@@ -171,7 +171,7 @@
             string urlBase,
             string servicePrefix,
             string controller)
-        {   
+        {
             try
             {
                 var client = new HttpClient();
