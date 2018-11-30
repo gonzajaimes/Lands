@@ -28,12 +28,25 @@ namespace Lands.Backend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = await db.Teams.FindAsync(id);
+
+            var team = await db.Teams.FindAsync(id);
+
             if (team == null)
             {
                 return HttpNotFound();
             }
+
             return View(team);
+        }
+
+        private TeamView ToTeamView(Team team)
+        {
+            return new TeamView
+            {
+                ImagePath = team.ImagePath,
+                Name = team.Name,
+                TeamId = team.TeamId,
+            };
         }
 
         // GET: Teams/Create
@@ -86,29 +99,47 @@ namespace Lands.Backend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = await db.Teams.FindAsync(id);
+
+            var team = await db.Teams.FindAsync(id);
+
             if (team == null)
             {
                 return HttpNotFound();
             }
-            return View(team);
+
+            var view = this.ToTeamView(team);
+            return View(view);
         }
+
 
         // POST: Teams/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "TeamId,Name,ImagePath")] Team team)
+        public async Task<ActionResult> Edit(TeamView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = view.ImagePath;
+                var folder = "~/Content/Teams";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var team = this.ToTeam(view);
+                team.ImagePath = pic;
                 db.Entry(team).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(team);
+
+            return View(view);
         }
+
 
         // GET: Teams/Delete/5
         public async Task<ActionResult> Delete(int? id)
