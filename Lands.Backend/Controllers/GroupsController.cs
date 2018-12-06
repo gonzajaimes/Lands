@@ -5,6 +5,7 @@ namespace Lands.Backend.Controllers
     using Lands.Backend.Models;
     using Lands.Domain;
     using System.Data.Entity;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -14,12 +15,71 @@ namespace Lands.Backend.Controllers
     {
         private LocalDataContext db = new LocalDataContext();
 
+        public async Task<ActionResult> DeleteTeam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var groupTeam = await db.GroupTeams.FindAsync(id);
+
+            if (groupTeam == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.GroupTeams.Remove(groupTeam);
+            await db.SaveChangesAsync();
+            return RedirectToAction(string.Format("Details/{0}",groupTeam.GroupId));
+
+            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddTeam(GroupTeam groupTeam)
+        {
+            if (ModelState.IsValid)
+            {
+                db.GroupTeams.Add(groupTeam);
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}",groupTeam.GroupId));
+            }
+
+            ViewBag.TeamId = new SelectList(db.Teams.OrderBy(t => t.Name), "TeamId", "Name",groupTeam.TeamId);
+            return View(groupTeam);
+        }
+
+        public async Task<ActionResult> AddTeam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Group group = await db.Groups.FindAsync(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var groupTeam = new GroupTeam
+            {
+                GroupId = group.GroupId,
+            };
+
+            ViewBag.TeamId = new SelectList(db.Teams.OrderBy(t => t.Name), "TeamId", "Name");
+            return View(groupTeam);
+        }
+
         // GET: Groups
         public async Task<ActionResult> Index()
         {
             return View(await db.Groups.ToListAsync());
         }
-
+        
+        
         // GET: Groups/Details/5
         public async Task<ActionResult> Details(int? id)
         {
