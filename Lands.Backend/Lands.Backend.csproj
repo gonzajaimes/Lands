@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BoardStatusController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -313,6 +314,11 @@
     <Content Include="Views\StatusMatches\Index.cshtml" />
     <Content Include="Views\Groups\AddMatch.cshtml" />
     <Content Include="Views\Groups\EditMatch.cshtml" />
+    <Content Include="Views\BoardStatus\Create.cshtml" />
+    <Content Include="Views\BoardStatus\Delete.cshtml" />
+    <Content Include="Views\BoardStatus\Details.cshtml" />
+    <Content Include="Views\BoardStatus\Edit.cshtml" />
+    <Content Include="Views\BoardStatus\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

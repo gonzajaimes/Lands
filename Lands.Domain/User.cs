@@ -1,6 +1,7 @@
 ﻿namespace Lands.Domain
 {
     using Newtonsoft.Json;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static System.Net.Mime.MediaTypeNames;
@@ -69,5 +70,8 @@
                 return string.Format("{0} {1}", this.FirstName, this.LastName);
             }
         }
+
+        [JsonIgnore]
+        public virtual ICollection<Board> Boards { get; set; }
     }
 }

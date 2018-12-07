@@ -9,9 +9,9 @@ namespace Lands.Domain
     {
         #region Properties
 
-        public DbSet<Lands.Domain.User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<Lands.Domain.UserType> UserTypes { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
 
         public DbSet<Team> Teams { get; set; }
 
@@ -20,6 +20,13 @@ namespace Lands.Domain
         public DbSet<GroupTeam> GroupTeams { get; set; }
 
         public DbSet<StatusMatch> StatusMatches { get; set; }
+
+        public DbSet<Match> Matches { get; set; }
+
+        public DbSet<BoardStatus> BoardStatus { get; set; }
+
+        public DbSet<Board> Boards { get; set; }
+
 
         #endregion
 

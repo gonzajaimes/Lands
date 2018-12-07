@@ -10,6 +10,6 @@ namespace Lands.Backend.Models
 
         public System.Data.Entity.DbSet<Lands.Domain.UserType> UserTypes { get; set; }
 
-        public System.Data.Entity.DbSet<Lands.Domain.Match> Matches { get; set; }
+        
     }
 }
