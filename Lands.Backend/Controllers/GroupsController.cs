@@ -17,6 +17,85 @@ namespace Lands.Backend.Controllers
     {
         private LocalDataContext db = new LocalDataContext();
 
+        public async Task<ActionResult> DeleteMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var match = await db.Matches.FindAsync(id);
+
+            if (match == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Matches.Remove(match);
+            await db.SaveChangesAsync();
+            return RedirectToAction(string.Format("Details/{0}", match.GroupId));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditMatch(Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                match.DateTime = match.DateTime.ToUniversalTime();
+                db.Entry(match).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}", match.GroupId));
+            }
+
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+            ViewBag.HomeId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.HomeId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+            return View(match);
+        }
+
+        public async Task<ActionResult> EditMatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var match = await db.Matches.FindAsync(id);
+
+            if (match == null)
+            {
+                return HttpNotFound();
+            }
+
+            match.DateTime = match.DateTime.ToLocalTime();
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+            ViewBag.HomeId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.HomeId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+            return View(match);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> AddMatch(Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                match.StatusMatchId = 1;
+                match.DateTime = match.DateTime.ToUniversalTime();
+                db.Matches.Add(match);
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}", match.GroupId));
+            }
+
+            var group = await db.Groups.FindAsync(match.GroupId);
+            var teams = await this.GetTeamsGroup(group);
+            ViewBag.HomeId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.HomeId);
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name", match.VisitorId);
+            return View(match);
+        }
+
         public async Task<ActionResult> AddMatch(int? id)
         { 
             if (id == null)
@@ -131,11 +210,18 @@ namespace Lands.Backend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = await db.Groups.FindAsync(id);
+            var group = await db.Groups.FindAsync(id);
+
             if (group == null)
             {
                 return HttpNotFound();
             }
+
+            foreach (var match in group.Matches)
+            {
+                match.DateTime = match.DateTime.ToLocalTime();
+            }
+
             return View(group);
         }
 
