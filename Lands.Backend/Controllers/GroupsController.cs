@@ -4,6 +4,8 @@ namespace Lands.Backend.Controllers
 {
     using Lands.Backend.Models;
     using Lands.Domain;
+    using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
@@ -14,6 +16,48 @@ namespace Lands.Backend.Controllers
     public class GroupsController : Controller
     {
         private LocalDataContext db = new LocalDataContext();
+
+        public async Task<ActionResult> AddMatch(int? id)
+        { 
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var group = await db.Groups.FindAsync(id);
+
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            var match = new Match
+            {
+                GroupId = group.GroupId,
+                DateTime = DateTime.Today,
+            };
+
+            var teams = await this.GetTeamsGroup(group);
+            ViewBag.HomeId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name");
+            ViewBag.VisitorId = new SelectList(teams.OrderBy(t => t.Name), "TeamId", "Name");
+            return View(match);
+        }
+
+        public async Task<List<Team>> GetTeamsGroup(Group group)
+        {
+            var teams = new List<Team>();
+            foreach (var item in group.GroupTeams)
+            {
+                var team = await db.Teams.FindAsync(item.TeamId);
+                if (team != null)
+                {
+                    teams.Add(team);
+                }
+            }
+
+            return teams;
+        }
+
 
         public async Task<ActionResult> DeleteTeam(int? id)
         {

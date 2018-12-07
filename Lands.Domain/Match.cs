@@ -17,7 +17,7 @@ namespace Lands.Domain
 
         public int GroupId { get; set; }
 
-        [Display(Name = "Local")]
+        [Display(Name = "Home")]
         public int HomeId { get; set; }
 
         [Display(Name = "Visitor")]

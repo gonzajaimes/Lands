@@ -24,11 +24,12 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.GroupId }, new { @class = "btn btn-warning" })
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-success" })
     @Html.ActionLink("Add Team", "AddTeam", new { id = Model.GroupId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add Match", "AddMatch", new { id = Model.GroupId }, new { @class = "btn btn-default" })
 </p>
 <h4>Teams</h4>
 @if (Model.GroupTeams.Count == 0)
 {
-    <h5>Not teams added yet.</h5>
+    <h5>No teams added yet.</h5>
 }
 else
 {
@@ -63,6 +64,71 @@ else
                        @class = "btn btn-danger",
                        onclick = "return confirm ('Are you sure you want to delete this team ?')"
                    })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<h4>Matches</h4>
+@if (Model.Matches.Count == 0)
+{
+    <h5>No matches added yet.</h5>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Status
+            </th>
+            <th>
+                Date Time
+            </th>
+            <th>
+                Local
+            </th>
+            <th>
+                Visitor
+            </th>
+            <th>
+                Local Goals
+            </th>
+            <th>
+                Visitor Goals
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Matches)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusMatch.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Home.ImagePath))
+                    {
+                        <img src="@Url.Content(item.Home.ImagePath)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Visitor.ImagePath))
+                    {
+                        <img src="@Url.Content(item.Visitor.ImagePath)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocalGoals)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VisitorGoals)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditMatch", new { id = item.MatchId }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "DeleteMatch", new { id = item.MatchId }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure to delete this match?')" })
                 </td>
             </tr>
         }
