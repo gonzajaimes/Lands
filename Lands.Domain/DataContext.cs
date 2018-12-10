@@ -27,6 +27,8 @@ namespace Lands.Domain
 
         public DbSet<Board> Boards { get; set; }
 
+        public DbSet<Prediction> Predictions { get; set; } 
+
 
         #endregion
 

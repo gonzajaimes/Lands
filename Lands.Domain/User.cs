@@ -73,5 +73,8 @@
 
         [JsonIgnore]
         public virtual ICollection<Board> Boards { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Prediction> Predictions { get; set; } 
     }
 }
