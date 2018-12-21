@@ -10,6 +10,7 @@ namespace Lands.ViewModels
     using GalaSoft.MvvmLight.Command;
     using System.Linq;
     using System;
+    using Lands.Helpers;
 
     public class LandsViewModel : BaseViewModel
     {
@@ -74,9 +75,9 @@ namespace Lands.ViewModels
             {
                 this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
-                     "Error",
+                     Languages.Error,
                      connection.Message,
-                     "Accept");
+                     Languages.Accept);
                 await Application.Current.MainPage.Navigation.PopAsync();
                 return;
             }
@@ -90,9 +91,9 @@ namespace Lands.ViewModels
             {
                 this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(
-                     "Error",
-                     response.Message,
-                     "Accept");
+                    Languages.Error,
+                    connection.Message,
+                    Languages.Accept);
                 await Application.Current.MainPage.Navigation.PopAsync();
                 return;
             }
